@@ -19,6 +19,8 @@ class CreateHeritageSiteTable extends Migration
             $table->string('description',255);
             $table->integer('crowd_limit');
             $table->integer('maximum_tickets');
+            $table->double('longitude');
+            $table->double('latitude');
             $table->timestamps();
         });
     }

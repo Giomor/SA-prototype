@@ -17,7 +17,10 @@ class CreateMediaTable extends Migration
             $table->bigIncrements('id');
             $table->string('name',50);
             $table->string('file',255); //TODO: analyze how to upload files in DB
-            $table->foreign('artwork_id')->on('artworks')->references('id');
+            $table->integer('artwork_id')
+                ->foreign('artwork_id')
+                ->references('id')->on('artworks')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

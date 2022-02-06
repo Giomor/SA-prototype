@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artwork extends Model
 {
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'heritage_site_id'];
+
+    public function heritage_site() {
+        return $this->belongsTo(HeritageSite::class);
+    }
 
     public function analytics() {
         return $this->hasMany(Analytics::class);

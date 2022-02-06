@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTicketTable extends Migration
+class CreateHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateTicketTable extends Migration
     public function up()
     {
         Schema::create('ticket', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('code',100);
             $table->date('date');
             $table->string('user_email')

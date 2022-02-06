@@ -17,6 +17,10 @@ class CreateArtworkTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->string('description', 255);
+            $table->integer('heritage_site_id')
+                ->foreign('heritage_site_id')
+                ->references('id')->on('heritage_site')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
