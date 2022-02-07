@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class HeritageSite extends Model
 {
     //TODO: maybe add opening time
+    protected $table ="heritage_site";
     protected $fillable = ['name', 'description','crowd_limit','maximum_tickets','latitude','longitude'];
 
     public function tickets() {

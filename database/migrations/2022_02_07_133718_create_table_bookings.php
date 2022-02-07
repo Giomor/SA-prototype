@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTicketTable extends Migration
+class CreateBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,14 @@ class CreateTicketTable extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->dateTime('datetime');
-            $table->boolean('booked');
-            $table->integer('heritage_site_id')
-                ->foreign('heritage_site')
-                ->references('id')->on('heritage_site')
+            $table->string('code',6);
+            $table->string('user_email')
+                ->foreign('user_email')
+                ->references('email')->on('users')
+                ->onDelete('cascade');
+            $table->integer('ticket_id')
+                ->foreign('ticket')
+                ->references('id')->on('ticket')
                 ->onDelete('cascade');
             $table->timestamps();
         });

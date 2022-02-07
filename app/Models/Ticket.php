@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['code', 'date'];
-
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
+    protected $table ="ticket";
+    protected $fillable = ['datetime','booked','heritage_site_id'];
 
     public function heritageSite() {
         return $this->belongsTo(HeritageSite::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HeritageSite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,13 @@ class RecommendationController extends Controller
         //
     }
 
-    public function recommendMuseums(Request $request) {
+    public function recommendMuseums($heritageSite_id) {
 
        // $user = Auth::user();
-        //TODO: replace this position with the position of the full museum
-        $latitude = 42.36151025704874;
-        $longitude = 13.418139001576291;
+
+        $heritage_site = HeritageSite::find($heritageSite_id);
+        $latitude = $heritage_site->latitude;
+        $longitude = $heritage_site->longitude;
         //Haversine formula to calculate distance between two points
         $sqlDistance = DB::raw('( 6371 * acos( cos( radians(' . $latitude . ') )
                        * cos( radians( heritage_site.latitude ) )
@@ -34,7 +36,7 @@ class RecommendationController extends Controller
                        * sin( radians( heritage_site.latitude ) ) ) )');
         $heritage_sites =  DB::table('heritage_site')
                     ->select('*')
-                    ->selectRaw("{$sqlDistance} AS distance")
+            ->selectRaw("{$sqlDistance} AS distance")
                     ->orderBy('distance')
                     ->get();
 
@@ -44,20 +46,34 @@ class RecommendationController extends Controller
             ->get();
 
         for ($i = 0; $i < count($heritage_sites); $i++) {
-            $artworks = DB::table('artwork')
+            $match = DB::table('artwork')
+                ->join('favorite', 'favorite.artwork_id', '=', 'artwork.id')
+                ->select('*')
+                ->where([
+                    ['artwork.heritage_site_id', '=', $heritage_sites[$i]->id],
+                    ['favorite.user_email', '=', 'giorgio@gmail.com'],
+                ])
+                ->get();
+            $matches[$i] = $match;
+           /* $artworks = DB::table('artwork')
                 ->select('*')
                 ->where('heritage_site_id', '=', $heritage_sites[$i]->id)
                 ->get();
             $count = 0;
-            for($j = 0; $j < count($artworks); $j++) {
-                for($x = 0; $x < count($preferences); $x++) {
+            for ($j = 0; $j < count($artworks); $j++) {
+                for ($x = 0; $x < count($preferences); $x++) {
                     if ($artworks[$j]->id == $preferences[$x]->artwork_id) {
                         $count++;
                     }
                 }
             }
-            $matches[$i] = $count;
-        }
-        dd($matches);
+            $matches[$heritage_sites[$i]->id] = $count;*/
+
+        }dd($matches);
+        /*$sorted = $matches->sortByDesc(function ($stats, $key) {
+            return count($stats);
+        });
+        dd($sorted);*/
+
     }
 }

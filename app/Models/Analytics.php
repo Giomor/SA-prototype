@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Analytics extends Model
 {
-    //TODO: add some attributes
+    protected $table ="analytics";
+    protected $fillable = ['time', 'date','user_email','artwork_id'];
 
     public function IoT() {
         return $this->belongsTo(IoT::class);
