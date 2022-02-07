@@ -1,0 +1,1 @@
+##The project is divided in three folders, the IoT one containing anything related to the RedNode side of the project, the laravel one containing anything related to the MVC structure of the project and the app one containing the phone application side of things.
