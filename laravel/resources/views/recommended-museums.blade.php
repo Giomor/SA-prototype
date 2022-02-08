@@ -5,13 +5,13 @@
             <p>Tickets available</p>
         </div>
         <div class="card-body">
-            @if(!$tickets->isEmpty())
-                @for($i=0;$i<count($tickets);$i++)
-                    <p>{{$tickets[$i]->datetime}}</p>
+        <h3>Recommendations based on your preferences</h3>
+                @for($i=0;$i<count($recommendations);$i++)
+                    <p>{{$recommendations[$i]->name}}</p>
+                    <p>Matches artwork: {{$recommendations[$i]->matches_count}}</p>
+                    <p>Distance from the chosen museum: {{$recommendations[$i]->distance}}</p>
+                    <br>
                 @endfor
-            @else
-                <p>There are no tickets available</p>
-                <a href="">Check recommended museums based on your preferences</a>
-            @endif
+
         </div>
 @endsection

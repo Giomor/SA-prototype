@@ -34,46 +34,30 @@ class RecommendationController extends Controller
                        - radians(' . $longitude  . ') )
                        + sin( radians(' . $latitude  . ') )
                        * sin( radians( heritage_site.latitude ) ) ) )');
-        $heritage_sites =  DB::table('heritage_site')
+        /*$heritage_sites =  DB::table('heritage_site')
                     ->select('*')
-            ->selectRaw("{$sqlDistance} AS distance")
+                    ->selectRaw("{$sqlDistance} AS distance")
                     ->orderBy('distance')
-                    ->get();
+                    ->get();*/
 
-        $preferences = DB::table('favorite')
-            ->select('*')
-            ->where('user_email', '=', 'giorgio@gmail.com')
+        $recommendations = DB::table('artwork')
+            ->join('favorite', 'favorite.artwork_id', '=', 'artwork.id')
+            ->join('heritage_site', 'artwork.heritage_site_id', '=', 'heritage_site.id')
+            ->select('heritage_site.id','heritage_site.name','heritage_site.description','heritage_site.latitude','heritage_site.longitude')
+            ->selectRaw("{$sqlDistance} AS distance")
+            ->selectRaw('count(*) as matches_count')
+            ->where([
+                ['favorite.user_email', '=', 'giorgio@gmail.com'],
+            ])
+            ->groupBy('heritage_site.id','heritage_site.name','heritage_site.description','heritage_site.latitude','heritage_site.longitude')
+            ->orderBy('matches_count','DESC')
             ->get();
+        //dd($recommendations);
 
-        for ($i = 0; $i < count($heritage_sites); $i++) {
-            $match = DB::table('artwork')
-                ->join('favorite', 'favorite.artwork_id', '=', 'artwork.id')
-                ->select('*')
-                ->where([
-                    ['artwork.heritage_site_id', '=', $heritage_sites[$i]->id],
-                    ['favorite.user_email', '=', 'giorgio@gmail.com'],
-                ])
-                ->get();
-            $matches[$i] = $match;
-           /* $artworks = DB::table('artwork')
-                ->select('*')
-                ->where('heritage_site_id', '=', $heritage_sites[$i]->id)
-                ->get();
-            $count = 0;
-            for ($j = 0; $j < count($artworks); $j++) {
-                for ($x = 0; $x < count($preferences); $x++) {
-                    if ($artworks[$j]->id == $preferences[$x]->artwork_id) {
-                        $count++;
-                    }
-                }
-            }
-            $matches[$heritage_sites[$i]->id] = $count;*/
 
-        }dd($matches);
-        /*$sorted = $matches->sortByDesc(function ($stats, $key) {
-            return count($stats);
-        });
-        dd($sorted);*/
+        return view('recommended-museums', [
+            "recommendations" => $recommendations
+        ]);
 
     }
 }
