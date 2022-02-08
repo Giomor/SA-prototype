@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArtworkTable extends Migration
+class UpdateArtworkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateArtworkTable extends Migration
      */
     public function up()
     {
-        Schema::create('artwork', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 100);
-            $table->string('description', 255);
-            $table->unsignedBigInteger('heritage_site_id');
-            $table->timestamps();
+        Schema::table('artwork',function(Blueprint $table){
+            $table->foreign('heritage_site_id')
+            ->references('id')->on('heritage_site')
+            ->onDelete('cascade');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateArtworkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artwork');
+        //
     }
 }
