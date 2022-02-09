@@ -8,6 +8,7 @@
         @if(!$tickets->isEmpty())
             @for($i=0;$i<count($tickets);$i++)
                 <p>{{$tickets[$i]->datetime}}</p>
+                <a href="/generate-qrcode">Buy Ticket</a>
             @endfor
         @else
             <p>There are no tickets available</p>

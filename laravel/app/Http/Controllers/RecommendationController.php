@@ -22,7 +22,7 @@ class RecommendationController extends Controller
 
     public function recommendMuseums($heritageSite_id) {
 
-       // $user = Auth::user();
+        $user = Auth::user();
 
         $heritage_site = HeritageSite::find($heritageSite_id);
         $latitude = $heritage_site->latitude;
@@ -39,15 +39,17 @@ class RecommendationController extends Controller
                     ->selectRaw("{$sqlDistance} AS distance")
                     ->orderBy('distance')
                     ->get();*/
-
+        //Get all museums in a radius of 15km, ordered by matches based on user preferences
         $recommendations = DB::table('artwork')
             ->join('favorite', 'favorite.artwork_id', '=', 'artwork.id')
             ->join('heritage_site', 'artwork.heritage_site_id', '=', 'heritage_site.id')
             ->select('heritage_site.id','heritage_site.name','heritage_site.description','heritage_site.latitude','heritage_site.longitude')
             ->selectRaw("{$sqlDistance} AS distance")
+            ->whereRaw("{$sqlDistance} <= ?", [15])
             ->selectRaw('count(*) as matches_count')
             ->where([
-                ['favorite.user_email', '=', 'giorgio@gmail.com'],
+                ['heritage_site.id', '!=', $heritageSite_id],
+                ['favorite.user_email', '=', $user->email],
             ])
             ->groupBy('heritage_site.id','heritage_site.name','heritage_site.description','heritage_site.latitude','heritage_site.longitude')
             ->orderBy('matches_count','DESC')

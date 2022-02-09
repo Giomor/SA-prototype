@@ -18,15 +18,13 @@ Route::get('/', function () {
 });
 
 Route::get('/recommendation','\App\Http\Controllers\RecommendationController@recommendMuseums');
-
-/*Route::get('qr-code-g', function () {
-
-    \QrCode::size(500)
-        ->format('png')
-        ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
-
-    return view('qrCode');
-});*/
+//AUTH ROUTES
+Route::get('login', [\App\Http\Controllers\Auth\AuthController::class, 'index'])->name('login');
+Route::post('post-login', [\App\Http\Controllers\Auth\AuthController::class, 'postLogin'])->name('login.post');
+Route::get('registration', [\App\Http\Controllers\Auth\AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [\App\Http\Controllers\Auth\AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('heritage-sites', [\App\Http\Controllers\Auth\AuthController::class, 'heritage-sites']);
+Route::get('logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('logout');;
 
 Route::get('/generate-qrcode', [\App\Http\Controllers\TicketController::class, 'bookTicket']);
 Route::get('/available-tickets/{heritageSite_id}', [\App\Http\Controllers\TicketController::class, 'getAllAvailableHeritageTickets']);
@@ -39,7 +37,9 @@ Aggregator of IoT signals
 Route::get('/aggregator',  function () {
     return view('welcome');
 });
-Route::post('/aggregator', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'aggregator']);//Called by device at the mqtt subscribe message (parsing of json data to gather info regarding the hs) 
+
+Route::post('/aggregator', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'aggregator']);//Called by device at the mqtt subscribe message (parsing of json data to gather info regarding the hs)
 Route::get('/testArtworkProximity', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'TFlister']);//Page used to test provided feature
 Route::get('/testArtworkProximity/{hsid}', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'testingFeature']);//Page used to test provided feature
+
 

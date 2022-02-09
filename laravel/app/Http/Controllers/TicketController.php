@@ -38,20 +38,21 @@ class TicketController extends Controller
     }
 
     public function bookTicket(Request $request) {
-        //$user = Auth::user();
+        $user = Auth::user();
         //generate unique ticket code
         $number = Str::random(6);
         if (Booking::where('code', $number)->count() > 0) Ticket::generateNumber();
         $booking = Booking::create([
             'code' => $number,
-            'user_email' => 'giorgio@gmail.com',
+            'user_email' => $user->email,
             'ticket_id' => 2
         ]);
         $ticket = Ticket::find(2);
         $ticket->booked = 1;
         $ticket->save();
         return view('ticket', [
-            "ticket" => $booking
+            "ticket" => $booking,
+            "user" => $user
         ]);
 
     }
