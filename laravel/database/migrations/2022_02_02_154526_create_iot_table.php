@@ -18,6 +18,7 @@ class CreateIotTable extends Migration
             $table->string('name',50);
             $table->string('type',50);
             $table->string('area',50);
+            $table->unsignedBigInteger('heritage_site_id');
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artwork extends Model
 {
+    protected $table ="artwork";
     protected $fillable = ['name', 'description', 'heritage_site_id'];
 
     public function heritage_site() {

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
-    protected $fillable = ['date'];
+    protected $table ="favorite";
+    protected $fillable = ['date','user_email','artwork_id'];
 
     public function user() {
         return $this->belongsTo(User::class);
