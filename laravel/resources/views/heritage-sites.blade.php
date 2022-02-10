@@ -10,6 +10,8 @@
                 <p>{{$heritage_sites[$i]->description}}</p>
                 <!--<a href="/recommended-museums/{{$heritage_sites[$i]->id}}">Show Tickets</a>-->
                 <a href="/available-tickets/{{$heritage_sites[$i]->id}}">Show Tickets</a>
+            <br>
+            <a href="/artworks/{{$heritage_sites[$i]->id}}">Show Artworks</a>
             @endfor
     </div>
 @endsection
