@@ -11,5 +11,5 @@
 @section('scripts')
     
     <script src="{{asset('js/proximity.js')}}"></script>
-    <script>canvasDraw('{!! $IoT !!}');</script>
+    <script>canvasDraw('{!! $uid !!}','{!! $IoT !!}');</script>
 @endsection

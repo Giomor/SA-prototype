@@ -3,20 +3,22 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Session;
+use App\Models\User;
 
 class ArtworkDescriptionServing extends Controller
 {
     public function testingFeature(Request $request,$id){
-        
-        $IoT =  DB::table('artwork')
-        ->select('*')->
-        where('heritage_site_id','=',$id)
-        ->get();
-        
-        return view('test-artprox',[
-            "IoT" => $IoT
-        ]);
+        if(Auth::user()){
+            $IoT =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$id)->get();
+            return view('test-artprox',[
+                "IoT" => $IoT,
+                "uid" => Auth::id()
+            ]);
+        }else{
+            return view('login');
+        }
     }
     public function deviceAggregation(Request $request,$id){
         dd($id);

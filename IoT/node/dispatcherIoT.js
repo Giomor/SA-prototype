@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/plain');
   const queryObject = url.parse(req.url, true).query;
   
-  client.publish("signal/"+queryObject.uid,'{"UID":22,"DevID":'+queryObject.devid+'}');
+  client.publish("signal/"+queryObject.uid,'{"UID":'+queryObject.uid+',"DevID":'+queryObject.devid+'}');
   //console.log("signal/"+queryObject.devid+""+queryObject.uid);
   res.end('');
 });

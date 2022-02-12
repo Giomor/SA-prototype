@@ -1,18 +1,10 @@
 [
     {
-        "id": "62814a5575f78aa0",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "be69b653907de029",
         "type": "mqtt in",
         "z": "62814a5575f78aa0",
         "name": "UserDev",
-        "topic": "signal/aggregator/22",
+        "topic": "signal/aggregator/+",
         "qos": "2",
         "datatype": "auto",
         "broker": "07b2ff5a9064378b",
@@ -20,11 +12,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 140,
+        "x": 160,
         "y": 440,
         "wires": [
             [
-                "1a34be35be8e5039"
+                "bf26dbb665d96d76"
             ]
         ]
     },
@@ -131,7 +123,7 @@
         "type": "mqtt in",
         "z": "62814a5575f78aa0",
         "name": "Sensors",
-        "topic": "signal/22",
+        "topic": "signal/+",
         "qos": "2",
         "datatype": "auto",
         "broker": "07b2ff5a9064378b",
@@ -191,7 +183,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "5",
+        "nbRateUnits": "2",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -234,10 +226,11 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 450,
+        "x": 590,
         "y": 440,
         "wires": []
     },
@@ -246,7 +239,7 @@
         "type": "function",
         "z": "62814a5575f78aa0",
         "name": "",
-        "func": "let mapto=flow.get(\"mapto\");\nmsg.payload.map={...flow.get(\"mapto\")};\nmsg.topic=\"signal/aggregator/22\"\nmapto[\"\"+msg.payload.UID]=[]\nflow.set(\"mapto\",mapto);\nreturn msg;",
+        "func": "let mapto=flow.get(\"mapto\");\nmsg.payload.map=[...flow.get(\"mapto\")[\"\"+msg.payload.UID]];\nmsg.topic=\"signal/aggregator/\"+msg.payload.UID\nmapto[\"\"+msg.payload.UID]=[]\nflow.set(\"mapto\",mapto);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -261,24 +254,23 @@
         ]
     },
     {
-        "id": "1a34be35be8e5039",
-        "type": "http request",
+        "id": "bf26dbb665d96d76",
+        "type": "delay",
         "z": "62814a5575f78aa0",
         "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "body",
-        "url": "127.0.0.1:8000/aggregator",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "credentials": {
-            "user": "",
-            "password": ""
-        },
-        "x": 290,
+        "pauseType": "timed",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 370,
         "y": 440,
         "wires": [
             [

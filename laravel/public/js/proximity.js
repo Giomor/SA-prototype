@@ -17,7 +17,7 @@ function paint(rarr){
         console.log("x:"+rect.x+" y:"+rect.y);
     });
 }
-function canvasDraw(elems){
+function canvasDraw(uid,elems){
     document.onreadystatechange = function () {
         if(document.readyState=="complete"){
         var elemsP=JSON.parse(elems);
@@ -56,14 +56,16 @@ function canvasDraw(elems){
                 let sideelx=element.x+element.w;
                 let sideely=element.y+element.h;
                 if(element!=pushed){
-                    if(element.x>=pushed.x && sideelx<=sidex   && element.y>=pushed.y && sideely<=sidey) ids.push(element.id);
+                    if(pushed.x < element.x + element.w  && pushed.x + pushed.w  > element.x && pushed.y < element.y + element.h && pushed.y + pushed.h > element.y){
+                       ids.push(element.id);
+                    }
                 }
             });
             
 
             ids.forEach(element => {
                 var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", "http://127.0.0.1:1337/?devid="+element+"&uid=22", false );
+                xmlHttp.open( "GET", "http://127.0.0.1:1337/?devid="+element+"&uid="+uid, false );
                 xmlHttp.send( null );
             });
             rectangles.pop(pushed);
