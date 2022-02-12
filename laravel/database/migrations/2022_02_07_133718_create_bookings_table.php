@@ -16,6 +16,8 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code',6);
+            $table->boolean('check_enter');
+            $table->boolean('check_exit');
             $table->string('user_email')
                 ->foreign('user_email')
                 ->references('email')->on('users')

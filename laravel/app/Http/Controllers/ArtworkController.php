@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artwork;
+use App\Models\HeritageSite;
 use App\Models\IoT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -40,13 +42,14 @@ class ArtworkController extends Controller
         ]);
     }
 
-    public function getAllFrontendArtworks()
+    public function getAllFrontendArtworks($heritageSite_id)
     {
-        $artworks =  DB::table('artwork')
-            ->select('*')
-            ->get();
+        $artworks = Artwork::all();
+        $heritageSite = HeritageSite::find($heritageSite_id);
+
         return view('frontend-artworks', [
-            "artworks" => $artworks,
+            "heritageSite" => $heritageSite,
+            "artworks" => $artworks
         ]);
     }
 

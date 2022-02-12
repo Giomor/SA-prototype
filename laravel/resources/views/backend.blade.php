@@ -7,5 +7,7 @@
         <a href="\backend\artworks">Artworks</a>
         <br>
         <a href="\backend\iot">handle IoT</a>
+        <br>
+        <a href="\backend\crowd-size">Check crowd</a>
     </div>
 @endsection

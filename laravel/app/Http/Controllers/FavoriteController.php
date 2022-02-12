@@ -40,4 +40,14 @@ class FavoriteController extends Controller
         return Redirect::back();
     }
 
+    public function deleteFavorite(Request $request)
+    {
+        $user = Auth::user();
+        DB::table('favorite')->where([
+            ['artwork_id', '=', $request->id],
+            ['user_email', '=', $user->email]
+        ])->delete();
+        return Redirect::back();
+    }
+
 }

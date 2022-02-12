@@ -27,10 +27,11 @@ Route::get('heritage-sites', [\App\Http\Controllers\Auth\AuthController::class, 
 Route::get('logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('logout');;
 
 //FRONTEND
-Route::get('/generate-qrcode', [\App\Http\Controllers\TicketController::class, 'bookTicket']);
+Route::get('/generate-qrcode/{ticket_id}', [\App\Http\Controllers\TicketController::class, 'bookTicket']);
 Route::get('/available-tickets/{heritageSite_id}', [\App\Http\Controllers\TicketController::class, 'getAllAvailableHeritageTickets']);
 Route::get('/artworks/{heritageSite_id}', [\App\Http\Controllers\ArtworkController::class, 'getAllFrontendArtworks']);
 Route::post('/add-favorite', [\App\Http\Controllers\FavoriteController::class, 'storeFavorite'])->name('addFavorite');
+Route::post('/delete-favorite', [\App\Http\Controllers\FavoriteController::class, 'deleteFavorite'])->name('removeFavorite');
 Route::get('/recommended-museums/{heritageSite_id}', [\App\Http\Controllers\RecommendationController::class, 'recommendMuseums']);
 Route::get('/heritage-sites', [\App\Http\Controllers\HeritageSiteController::class, 'getAllHeritageSites']);
 
@@ -41,12 +42,16 @@ Route::post('/backend/store-iot', [\App\Http\Controllers\IoTController::class, '
 Route::get('/backend/edit-iot/{iotId}', [\App\Http\Controllers\IoTController::class, 'editIoT']);
 Route::post('/backend/update-iot', [\App\Http\Controllers\IoTController::class, 'updateIoT'])->name('editIot.post');
 Route::post('/delete-iot', [\App\Http\Controllers\IoTController::class, 'deleteIoT'])->name('deleteIot');
+
 Route::get('/backend/artworks', [\App\Http\Controllers\ArtworkController::class, 'getAllArtworks']);
 Route::get('/backend/add-artwork/{heritageSiteId}', [\App\Http\Controllers\ArtworkController::class, 'addArtwork']);
 Route::post('/backend/store-artwork', [\App\Http\Controllers\ArtworkController::class, 'storeArtwork'])->name('artwork.post');
 Route::get('/backend/edit-artwork/{artworkId}', [\App\Http\Controllers\ArtworkController::class, 'editArtwork']);
 Route::post('/backend/update-artwork', [\App\Http\Controllers\ArtworkController::class, 'updateArtwork'])->name('editArtwork.post');
 Route::post('/delete-artwork', [\App\Http\Controllers\ArtworkController::class, 'deleteArtwork'])->name('deleteArtwork');
+
+Route::get('/backend/crowd-size', [\App\Http\Controllers\BookingController::class, 'crowdSize']);
+
 /*
 Aggregator of IoT signals
 */

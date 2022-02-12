@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\HeritageSite;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,8 @@ class TicketController extends Controller
     }
 
     public function getAllAvailableHeritageTickets($heritageSites_id) {
+
+        $heritageSite = HeritageSite::find($heritageSites_id);
         $tickets =  DB::table('ticket')
             ->select('*')
             ->where([
@@ -33,11 +36,11 @@ class TicketController extends Controller
 
         return view('available-tickets', [
             "tickets" => $tickets,
-            "heritage_site_id" => $heritageSites_id,
+            "heritageSite" => $heritageSite,
         ]);
     }
 
-    public function bookTicket(Request $request) {
+    public function bookTicket($ticket_id) {
         $user = Auth::user();
         //generate unique ticket code
         $number = Str::random(6);
@@ -45,9 +48,9 @@ class TicketController extends Controller
         $booking = Booking::create([
             'code' => $number,
             'user_email' => $user->email,
-            'ticket_id' => 2
+            'ticket_id' => $ticket_id
         ]);
-        $ticket = Ticket::find(2);
+        $ticket = Ticket::find($ticket_id);
         $ticket->booked = 1;
         $ticket->save();
         return view('ticket', [
