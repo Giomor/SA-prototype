@@ -1,5 +1,13 @@
 [
     {
+        "id": "62814a5575f78aa0",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "be69b653907de029",
         "type": "mqtt in",
         "z": "62814a5575f78aa0",
@@ -12,11 +20,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
-        "y": 440,
+        "x": 145,
+        "y": 456,
         "wires": [
             [
-                "bf26dbb665d96d76"
+                "020a8f5b085c2d4d"
             ]
         ]
     },
@@ -218,23 +226,6 @@
         "wires": []
     },
     {
-        "id": "744961222e8b7008",
-        "type": "debug",
-        "z": "62814a5575f78aa0",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 590,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "eafc81cf93eec132",
         "type": "function",
         "z": "62814a5575f78aa0",
@@ -254,29 +245,21 @@
         ]
     },
     {
-        "id": "bf26dbb665d96d76",
-        "type": "delay",
+        "id": "020a8f5b085c2d4d",
+        "type": "debug",
         "z": "62814a5575f78aa0",
         "name": "",
-        "pauseType": "timed",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 370,
-        "y": 440,
-        "wires": [
-            [
-                "744961222e8b7008"
-            ]
-        ]
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 560,
+        "wires": []
     },
     {
         "id": "07b2ff5a9064378b",

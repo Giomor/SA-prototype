@@ -20,10 +20,21 @@ class ArtworkDescriptionServing extends Controller
             return view('login');
         }
     }
-    public function deviceAggregation(Request $request,$id){
-        dd($id);
-        //DB::table('')
-        //json
+    public function deviceAggregation(Request $request){
+        if(Auth::user()){
+            
+            $map=$request->all();
+            $mapexp=explode(",",$map["mapofid"]);
+            
+            $retmap=array();
+            foreach ($mapexp as $value) {
+                $retmap[] = DB::table('artwork')->select('*')->where('id','=',$value)->get();
+            }
+            return  response($retmap, 200)
+            ->header('Content-Type', 'text/json');
+            /*return response(request->all(), 200)
+            ->header('Content-Type', 'text/json');*/
+        }
     }
     public function TFlister(){
         $heritageSites =  DB::table('heritage_site')

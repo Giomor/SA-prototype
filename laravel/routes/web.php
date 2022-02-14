@@ -55,12 +55,12 @@ Route::get('/backend/crowd-size', [\App\Http\Controllers\BookingController::clas
 /*
 Aggregator of IoT signals
 */
-Route::get('/aggregator',  function () {
+Route::get('/iot/aggregator',  function () {
     return view('welcome');
 });
 
-Route::post('/aggregator', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'aggregator']);//Called by device at the mqtt subscribe message (parsing of json data to gather info regarding the hs)
-Route::get('/testArtworkProximity', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'TFlister']);//Page used to test provided feature
-Route::get('/testArtworkProximity/{hsid}', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'testingFeature']);//Page used to test provided feature
+Route::post('/iot/aggregator', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'deviceAggregation']);//Called by device at the mqtt subscribe message (parsing of json data to gather info regarding the hs)
+Route::get('/iot/testArtworkProximity', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'TFlister']);//Page used to test provided feature
+Route::get('/iot/testArtworkProximity/{hsid}', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'testingFeature']);//Page used to test provided feature
 
 

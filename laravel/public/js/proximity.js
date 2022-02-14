@@ -14,7 +14,7 @@ function paint(rarr){
         if(rect.id!=undefined){
             ctxt.fillText(" "+rect.id, rect.x + rect.w , rect.y + rect.h );
         }
-        console.log("x:"+rect.x+" y:"+rect.y);
+       // console.log("x:"+rect.x+" y:"+rect.y);
     });
 }
 function canvasDraw(uid,elems){
@@ -61,11 +61,9 @@ function canvasDraw(uid,elems){
                     }
                 }
             });
-            
-
             ids.forEach(element => {
                 var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", "http://127.0.0.1:1337/?devid="+element+"&uid="+uid, false );
+                xmlHttp.open( "GET", "http://127.0.0.1:1337/iotrequest?devid="+element+"&uid="+uid, false );
                 xmlHttp.send( null );
             });
             rectangles.pop(pushed);
@@ -75,3 +73,29 @@ function canvasDraw(uid,elems){
     }
 }
 //signal/22
+function clientWSListener(clientid,token){
+    const url="ws://127.0.0.1:9001"
+    const client = mqtt.connect(url);
+    const topic="signal/aggregator/"+clientid;
+    client.subscribe(topic, function (err) {
+        if (!err) {
+            console.log(err);
+        }
+    });
+    client.on('message', function (topic, message) {  
+        var http = new XMLHttpRequest();
+        var url = 'http://127.0.0.1:8000/iot/aggregator';
+        var token=document.getElementsByName("_token")[0].getAttribute("value");
+        console.log(message);
+        var p=JSON.parse(message).map;
+        var params = '_token='+token+'&mapofid='+p;
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function(resp) {
+            var body = http.response;
+            document.getElementById("mqttUserOut").innerHTML="";
+            document.getElementById("mqttUserOut").append(body+"<br>");
+        }
+        http.send(params);
+    });   
+}
