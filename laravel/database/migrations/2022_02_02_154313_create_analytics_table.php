@@ -15,6 +15,12 @@ class CreateAnalyticsTable extends Migration
     {
         Schema::create('analytics', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date('date');
+            $table->integer('time');
+            $table->string('user_id')
+                ->foreign('user_id')
+                ->references('email')->on('users')
+                ->onDelete('cascade');
             $table->integer('iot_id')
                 ->foreign('iot_id')
                 ->references('id')->on('iot')

@@ -14,4 +14,7 @@
             <a href="/artworks/{{$heritage_sites[$i]->id}}">Show Artworks</a>
             @endfor
     </div>
+    <div class="card-body">
+        <a href="/suggest-routes">See suggested route</a>
+    </div>
 @endsection

@@ -27,6 +27,10 @@ class Artwork extends Model
         return $this->hasMany(IoT::class);
     }
 
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
+
     public function isFavorite() {
         $user = Auth::user();
         $favorites = DB::table('favorite')

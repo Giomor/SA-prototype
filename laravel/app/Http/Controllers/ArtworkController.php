@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artwork;
+use App\Models\AssociationArtworkTag;
 use App\Models\HeritageSite;
 use App\Models\IoT;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -70,11 +72,26 @@ class ArtworkController extends Controller
 
     public function storeArtwork(Request $request)
     {
+        $myString = $request->tags;
+        $tags = explode(',', $myString);
+
         $artwork = Artwork::create([
             'name' => $request->name,
             'description' => $request->description,
             'heritage_site_id' => $request->id
         ]);
+        foreach($tags as $tag) {
+            $t = DB::table('tag')->select('*')
+                ->where('keyword','=',$tag)->first();
+            if($t == null) {
+                $t = Tag::create(['keyword' => $tag]);
+            }
+
+            $association = AssociationArtworkTag::create([
+                'artwork_id' => $artwork->id,
+                'tag_id' => $t->id
+            ]);
+         }
         return redirect('backend/artworks');
     }
 

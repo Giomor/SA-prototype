@@ -52,6 +52,14 @@ Route::post('/delete-artwork', [\App\Http\Controllers\ArtworkController::class, 
 
 Route::get('/backend/crowd-size', [\App\Http\Controllers\BookingController::class, 'crowdSize']);
 
+Route::get('/backend/add-ticket/{heritageSiteId}', [\App\Http\Controllers\BookingController::class, 'addTicket']);
+Route::post('/backend/book-ticket', [\App\Http\Controllers\BookingController::class, 'storeBook'])->name('ticket.post');
+
+Route::get('/backend/analytics', [\App\Http\Controllers\AnalyticController::class, 'getAnalytics']);
+
+
+Route::get('/suggest-routes', [\App\Http\Controllers\RecommendationController::class, 'suggestRoute']);
+
 /*
 Aggregator of IoT signals
 */

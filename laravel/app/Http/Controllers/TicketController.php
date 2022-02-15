@@ -53,8 +53,11 @@ class TicketController extends Controller
         $ticket = Ticket::find($ticket_id);
         $ticket->booked = 1;
         $ticket->save();
+
+        $heritage_site = HeritageSite::find($ticket->heritage_site_id);
         return view('ticket', [
-            "ticket" => $booking,
+            "heritageSite" => $heritage_site,
+            "ticket" => $ticket,
             "user" => $user
         ]);
 

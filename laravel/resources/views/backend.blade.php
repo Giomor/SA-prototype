@@ -9,5 +9,9 @@
         <a href="\backend\iot">handle IoT</a>
         <br>
         <a href="\backend\crowd-size">Check crowd</a>
+        <br>
+        <a href="\backend\analytics">Artworks Analytics</a>
+        <br>
+        <a href="\backend\add-ticket\1">Buy ticket for user</a>
     </div>
 @endsection

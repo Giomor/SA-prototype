@@ -1,7 +1,7 @@
 @extends('layouttemplate')
 @section('content')
         <div class="card-header">
-            <h2>Heritage Site Name</h2>
+            <h2>{{$heritageSite->name}}</h2>
             <p>Tickets available</p>
         </div>
         <div class="card-body">
