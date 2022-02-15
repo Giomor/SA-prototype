@@ -70,5 +70,5 @@ Route::get('/iot/aggregator',  function () {
 Route::post('/iot/aggregator', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'deviceAggregation']);//Called by device at the mqtt subscribe message (parsing of json data to gather info regarding the hs)
 Route::get('/iot/testArtworkProximity', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'TFlister']);//Page used to test provided feature
 Route::get('/iot/testArtworkProximity/{hsid}', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'testingFeature']);//Page used to test provided feature
-
+Route::post('/iot/endcheck', [\App\Http\Controllers\ArtworkDescriptionServing::class, 'endCheck']);//Page used to test provided feature
 

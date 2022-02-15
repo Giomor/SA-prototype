@@ -82,20 +82,54 @@ function clientWSListener(clientid,token){
             console.log(err);
         }
     });
+    var usermap=new Map();
+    var endcheck=new Map();
+    
     client.on('message', function (topic, message) {  
+        endcheck.clear();
+        const d=new Date();
         var http = new XMLHttpRequest();
         var url = 'http://127.0.0.1:8000/iot/aggregator';
         var token=document.getElementsByName("_token")[0].getAttribute("value");
         console.log(message);
         var p=JSON.parse(message).map;
+        console.log(p);
+        //controllare se tra arrivati c'è usemap se non c'è endcheck e delete se c'è lo rimuovo
+        for (const [key, value] of usermap.entries()) {
+            if( p.find(element=>key==element)===undefined){
+                endcheck.set(key,(Math.floor(d.getTime()-value)/1000));
+            }else{
+                var index = p.indexOf(key);
+                if (index !== -1) {
+                    p.splice(index, 1);
+                }
+            }
+        }
+        for (const [key, value] of endcheck.entries()) {
+            usermap.delete(key);
+        }
+        p.forEach(element => {
+            if(!(usermap.has(element)))usermap.set(element,d.getTime());
+        });
         var params = '_token='+token+'&mapofid='+p;
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function(resp) {
+
             var body = http.response;
             document.getElementById("mqttUserOut").innerHTML="";
             document.getElementById("mqttUserOut").append(body+"<br>");
         }
-        http.send(params);
+        var paramsEC = '_token='+token+'&pec='+endcheck;
+        var url = 'http://127.0.0.1:8000/iot/endcheck';
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function(resp) {
+
+            var body = http.response;
+            document.getElementById("mqttUserOut").innerHTML="";
+            document.getElementById("mqttUserOut").append(body+"<br>");
+        }
+        http.send(paramsEC);
     });   
 }

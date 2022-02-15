@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\User;
+use App\Models\Analytics;
 
 class ArtworkDescriptionServing extends Controller
 {
@@ -32,8 +33,6 @@ class ArtworkDescriptionServing extends Controller
             }
             return  response($retmap, 200)
             ->header('Content-Type', 'text/json');
-            /*return response(request->all(), 200)
-            ->header('Content-Type', 'text/json');*/
         }
     }
     public function TFlister(){
@@ -44,4 +43,21 @@ class ArtworkDescriptionServing extends Controller
             "heritage_sites" => $heritageSites
         ]);
     }
+    public function endCheck(Request $request){
+        $map=$request->all();
+        $mapexp=explode(",",$map["pec"]);
+        foreach ($mapexp as $key,$value) {
+            Analytics::create([
+                "date":Carbon\Carbon::now()->toDateTimeString();	
+                "time":$value
+                "user_id":Auth::user()->id;
+                "iot_id":$key
+                "artwork_id":DB::table('artwork')->select('id')->where('iotDescrId','=',$key)->get();
+            ]);
+        }
+        return  response(null, 200)
+        ->header('Content-Type', 'text/json');
+    }
+
+    //
 }
