@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Artwork extends Model
 {
     protected $table ="artwork";
-    protected $fillable = ['name', 'description', 'heritage_site_id'];
+    protected $fillable = ['name', 'description', 'heritage_site_id','iotDescrId','iotPosId '	];
 
     public function heritage_site() {
         return $this->belongsTo(HeritageSite::class);

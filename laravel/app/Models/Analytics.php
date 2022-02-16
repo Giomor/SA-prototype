@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Analytics extends Model
 {
     protected $table ="analytics";
-    protected $fillable = ['time', 'date','user_id','artwork_id'];
+    protected $fillable = ['time', 'date','user_id','iot_id','artwork_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

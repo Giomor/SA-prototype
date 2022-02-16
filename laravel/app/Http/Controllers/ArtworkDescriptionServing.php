@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\User;
 use App\Models\Analytics;
+use Carbon\Carbon;
 
 class ArtworkDescriptionServing extends Controller
 {
@@ -44,20 +45,24 @@ class ArtworkDescriptionServing extends Controller
         ]);
     }
     public function endCheck(Request $request){
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: *");
         $map=$request->all();
         $mapexp=explode(",",$map["pec"]);
-        foreach ($mapexp as $key,$value) {
+        $time=Carbon::now()->toDateTimeString();
+        $js=json_decode($map["pec"]);
+        foreach ($js->check as $key=>$value) {
+            $e=DB::table('artwork')->select('*')->where('id','=',$key)->first();
+            
             Analytics::create([
-                "date":Carbon\Carbon::now()->toDateTimeString();	
-                "time":$value
-                "user_id":Auth::user()->id;
-                "iot_id":$key
-                "artwork_id":DB::table('artwork')->select('id')->where('iotDescrId','=',$key)->get();
+                "date"=>$time,	
+                "time"=>$value,
+                "user_id"=>Auth::user()->id,
+                "iot_id"=>$e->iotDescrId,
+                "artwork_id"=>$e->id
             ]);
         }
         return  response(null, 200)
         ->header('Content-Type', 'text/json');
     }
-
-    //
 }

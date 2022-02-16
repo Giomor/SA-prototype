@@ -14,7 +14,6 @@ function paint(rarr){
         if(rect.id!=undefined){
             ctxt.fillText(" "+rect.id, rect.x + rect.w , rect.y + rect.h );
         }
-       // console.log("x:"+rect.x+" y:"+rect.y);
     });
 }
 function canvasDraw(uid,elems){
@@ -91,13 +90,13 @@ function clientWSListener(clientid,token){
         var http = new XMLHttpRequest();
         var url = 'http://127.0.0.1:8000/iot/aggregator';
         var token=document.getElementsByName("_token")[0].getAttribute("value");
-        console.log(message);
+        //console.log(message);
         var p=JSON.parse(message).map;
-        console.log(p);
+        //console.log(p);
         //controllare se tra arrivati c'è usemap se non c'è endcheck e delete se c'è lo rimuovo
         for (const [key, value] of usermap.entries()) {
             if( p.find(element=>key==element)===undefined){
-                endcheck.set(key,(Math.floor(d.getTime()-value)/1000));
+                endcheck.set(key,(Math.floor((d.getTime()-value)/1000)));
             }else{
                 var index = p.indexOf(key);
                 if (index !== -1) {
@@ -120,7 +119,10 @@ function clientWSListener(clientid,token){
             document.getElementById("mqttUserOut").innerHTML="";
             document.getElementById("mqttUserOut").append(body+"<br>");
         }
-        var paramsEC = '_token='+token+'&pec='+endcheck;
+        http.send(params);
+        console.log(usermap);
+        console.log(endcheck);
+        var paramsEC = '_token='+token+'&pec='+JSON.stringify({"check":Object.fromEntries(endcheck)});
         var url = 'http://127.0.0.1:8000/iot/endcheck';
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
