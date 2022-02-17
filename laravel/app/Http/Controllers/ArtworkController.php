@@ -109,4 +109,13 @@ class ArtworkController extends Controller
         DB::table('artwork')->where('id', '=', $request->id)->delete();
         return Redirect::back()->with('artworkdeleted','Artwork Deleted');
     }
+    public function crowdCheck(Request $request,$id)
+    {
+        $IoT =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$id)->get();
+        return view('backendcanvas',[
+            "IoT" => $IoT,
+            "uid" => Auth::id()
+        ]);
+        return view("backendcanvas");
+    }
 }

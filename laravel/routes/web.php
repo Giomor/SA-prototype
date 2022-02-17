@@ -49,6 +49,7 @@ Route::post('/backend/store-artwork', [\App\Http\Controllers\ArtworkController::
 Route::get('/backend/edit-artwork/{artworkId}', [\App\Http\Controllers\ArtworkController::class, 'editArtwork']);
 Route::post('/backend/update-artwork', [\App\Http\Controllers\ArtworkController::class, 'updateArtwork'])->name('editArtwork.post');
 Route::post('/delete-artwork', [\App\Http\Controllers\ArtworkController::class, 'deleteArtwork'])->name('deleteArtwork');
+Route::get('/backend/crowdcheck/{hsid}', [\App\Http\Controllers\ArtworkController::class, 'crowdCheck'])->name('editArtwork.post');
 
 Route::get('/backend/crowd-size', [\App\Http\Controllers\BookingController::class, 'crowdSize']);
 

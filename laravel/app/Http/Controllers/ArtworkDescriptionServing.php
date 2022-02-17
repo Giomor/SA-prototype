@@ -19,7 +19,7 @@ class ArtworkDescriptionServing extends Controller
                 "uid" => Auth::id()
             ]);
         }else{
-            return view('login');
+            return view('../login');
         }
     }
     public function deviceAggregation(Request $request){
