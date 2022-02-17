@@ -1,12 +1,24 @@
 
 var rectangles=[];
+var circles=[];
 function paint(rarr){
     let canvas = document.querySelector("#canvasClick");
     const ctxt = canvas.getContext('2d');
-    ctxt.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height); 
     rarr.forEach(rect=>{
         ctxt.fillStyle = rect.color;
-        if(rect.h!=undefined && rect.w!=undefined){
+        if(rect.circle!=undefined){
+            const centerX = rect.x;
+            const centerY = rect.y;
+            const radius = 10;
+            ctxt.beginPath();
+            ctxt.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            ctxt.fillStyle = 'green';
+            ctxt.fill();
+            ctxt.lineWidth = 5;
+            ctxt.strokeStyle = '#003300';
+            ctxt.stroke();
+        }else if(rect.h!=undefined && rect.w!=undefined){
             ctxt.fillRect(rect.x,rect.y,rect.h,rect.w); 
         }else{
             ctxt.fillRect(rect.x,rect.y,10,10); 
@@ -14,6 +26,7 @@ function paint(rarr){
         if(rect.id!=undefined){
             ctxt.fillText(" "+rect.id, rect.x + rect.w , rect.y + rect.h );
         }
+        
     });
 }
 function canvasDraw(uid,elems){
@@ -26,7 +39,13 @@ function canvasDraw(uid,elems){
             let y=Math.floor((Math.random() * (canvas.clientHeight)));
             rectangles.push({"x":x,"y":y,"color":"#56A7E2","w":20,"h":20,"id":element.id});
         });
-        paint(rectangles);
+        for(var i=0; i<10;i++){
+            let x=Math.floor((Math.random() * (canvas.clientWidth)) );
+            let y=Math.floor((Math.random() * (canvas.clientHeight)));
+            circles.push({"x":x,"y":y,"color":"#56AFE2","w":20,"h":20,"circle":1});
+        }
+        
+        paint(rectangles.concat(circles));
 
         let sampleEle = document.querySelector("#canvasClick");
         sampleEle.addEventListener("mousemove", (event) => {
@@ -45,7 +64,7 @@ function canvasDraw(uid,elems){
             pushed={"x":xr,"y":yr,"color":"#000000","w":70,"h":70};
             rectangles.push(pushed);
             console.log(rectangles);
-            paint(rectangles);
+            paint(rectangles.concat(circles));
         });
         sampleEle.addEventListener("mouseup", (event) => {
             let sidex=pushed.x+pushed.w;
@@ -66,7 +85,7 @@ function canvasDraw(uid,elems){
                 xmlHttp.send( null );
             });
             rectangles.pop(pushed);
-            paint(rectangles);
+            paint(rectangles.concat(circles));
         });
         }
     }
