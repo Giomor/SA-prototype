@@ -11,23 +11,37 @@
 
                             <form action="{{ route('artwork.post') }}" method="POST" id="artworkform">
                                 @csrf
-                                <input type="hidden" id="id" class="form-control" name="id" value="{{$heritage_site_id}}" required autofocus>
+                                <input type="hidden" id="id" class="form-control" name="id"
+                                       value="{{$heritage_site_id}}" required autofocus>
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="name" class="form-control" name="name" required autofocus>
+                                        <input type="text" id="name" class="form-control" name="name" required
+                                               autofocus>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+                                    <label for="description"
+                                           class="col-md-4 col-form-label text-md-right">Description</label>
                                     <div class="col-md-6">
-                                       <textarea id="description" rows="4" cols="50" name="description" form="artworkform"></textarea>
+                                        <textarea id="description" rows="4" cols="50" name="description"
+                                                  form="artworkform"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="tags" class="col-md-4 col-form-label text-md-right">Add tags (separated by comma)</label>
+                                    <label for="tags" class="col-md-4 col-form-label text-md-right">Add tags (separated
+                                        by comma)</label>
                                     <div class="col-md-6">
-                                        <textarea id="tags" rows="4" cols="50" name="tags" form="artworkform"></textarea>
+                                        <textarea id="tags" rows="4" cols="50" name="tags"
+                                                  form="artworkform"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
+                                    <div class="col-md-6">
+                                        <input type="file"
+                                               id="image" name="image"
+                                               accept="image/png, image/jpeg">
                                     </div>
                                 </div>
                                 <div class="col-md-6 offset-md-4">

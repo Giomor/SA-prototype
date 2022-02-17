@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::get('/recommendation','\App\Http\Controllers\RecommendationController@recommendMuseums');
 //AUTH ROUTES
 Route::get('login', [\App\Http\Controllers\Auth\AuthController::class, 'index'])->name('login');
+Route::get('/backend', function () {
+    return view('backend');
+});
 Route::post('post-login', [\App\Http\Controllers\Auth\AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [\App\Http\Controllers\Auth\AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [\App\Http\Controllers\Auth\AuthController::class, 'postRegistration'])->name('register.post');
@@ -49,7 +52,7 @@ Route::post('/backend/store-artwork', [\App\Http\Controllers\ArtworkController::
 Route::get('/backend/edit-artwork/{artworkId}', [\App\Http\Controllers\ArtworkController::class, 'editArtwork']);
 Route::post('/backend/update-artwork', [\App\Http\Controllers\ArtworkController::class, 'updateArtwork'])->name('editArtwork.post');
 Route::post('/delete-artwork', [\App\Http\Controllers\ArtworkController::class, 'deleteArtwork'])->name('deleteArtwork');
-Route::get('/backend/crowdcheck/{hsid}', [\App\Http\Controllers\ArtworkController::class, 'crowdCheck'])->name('editArtwork.post');
+Route::get('/backend/crowdcheck/{hsid}', [\App\Http\Controllers\ArtworkController::class, 'crowdCheck']);
 
 Route::get('/backend/crowd-size', [\App\Http\Controllers\BookingController::class, 'crowdSize']);
 
@@ -60,6 +63,8 @@ Route::get('/backend/analytics', [\App\Http\Controllers\AnalyticController::clas
 
 
 Route::get('/suggest-routes', [\App\Http\Controllers\RecommendationController::class, 'suggestRoute']);
+Route::post('/suggest-routes', [\App\Http\Controllers\RecommendationController::class, 'suggestRoute'])->name('select.post');
+
 
 /*
 Aggregator of IoT signals

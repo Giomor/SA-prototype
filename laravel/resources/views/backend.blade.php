@@ -12,6 +12,7 @@
         <br>
         <a href="\backend\analytics">Artworks Analytics</a>
         <br>
-        <a href="\backend\add-ticket\1">Buy ticket for user</a>
+        <a href="\backend\add-ticket\2">Buy ticket for user</a>
+
     </div>
 @endsection

@@ -1,5 +1,6 @@
 @extends('layouttemplate')
 @section('content')
+    <a href="/backend">Back</a>
     <div class="card-header">
         <h2>Heritage Site Name</h2>
         <p>Tickets available</p>

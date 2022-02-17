@@ -1,6 +1,7 @@
 @extends('layouttemplate')
 
 @section('content')
+    <a href="/backend">Back</a>
     <main class="login-form">
         <div class="cotainer">
             <div class="row justify-content-center">

@@ -78,6 +78,7 @@ class ArtworkController extends Controller
         $artwork = Artwork::create([
             'name' => $request->name,
             'description' => $request->description,
+            'image' => $request->image,
             'heritage_site_id' => $request->id
         ]);
         foreach($tags as $tag) {
@@ -100,6 +101,7 @@ class ArtworkController extends Controller
         $artwork = Artwork::find($request->id);
         $artwork->name = $request->name;
         $artwork->description = $request->description;
+        $artwork->image = $request->image;
         $artwork->save();
         return redirect('backend/artworks');
     }
@@ -109,10 +111,24 @@ class ArtworkController extends Controller
         DB::table('artwork')->where('id', '=', $request->id)->delete();
         return Redirect::back()->with('artworkdeleted','Artwork Deleted');
     }
-    public function crowdCheck(Request $request,$id)
+    public function crowdCheck($id)
     {
+        $crowdSize = DB::table('bookings')
+            ->select('heritage_site.id', 'heritage_site.name')
+            ->join('ticket', 'ticket.id', '=', 'bookings.ticket_id')
+            ->join('heritage_site', 'ticket.heritage_site_id', '=', 'heritage_site.id')
+            ->selectRaw('count(*) as crowd_inside')
+            ->where([
+                ['check_enter', '=', 1],
+                ['check_exit', '=', 0],
+                ['heritage_site.id','=',$id]
+            ])
+            ->groupBy('heritage_site.id', 'heritage_site.name')
+            ->first();
         $IoT =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$id)->get();
+
         return view('backendcanvas',[
+            "crowdSize" => $crowdSize->crowd_inside,
             "IoT" => $IoT,
             "uid" => Auth::id()
         ]);

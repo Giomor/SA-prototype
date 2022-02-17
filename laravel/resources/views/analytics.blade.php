@@ -1,5 +1,6 @@
 @extends('layouttemplate')
 @section('content')
+    <a href="/backend">Back</a>
     <div class="card-header">
         <h2>Analytics</h2>
         <p>Extracted time spent by users in proximity of every artwork</p>
@@ -9,7 +10,7 @@
             @if($i == 0 || ($i>0 && $analytics[$i]->artwork_id != $analytics[$i-1]->artwork_id))
                 <h3>Artwork: {{$analytics[$i]->artwork->name}}</h3>
             @endif
-                <p>User: {{$analytics[$i]->user->name}}, Date: {{$analytics[$i]->date}}, Time spent: {{$analytics[$i]->time}}</p>
+                <p>User: {{$analytics[$i]->user_id}}, Date: {{$analytics[$i]->date}}, Time spent: {{$analytics[$i]->time}}</p>
         @endfor
     </div>
 @endsection

@@ -1,5 +1,6 @@
 @extends('layouttemplate')
 @section('content')
+    <a href="\heritage-sites">BACK</a>
     <div class="card-header">
         <h2>{{$heritageSite->name}}</h2>
         <p>Artworks</p>

@@ -62,7 +62,7 @@ class RecommendationController extends Controller
 
     }
 
-    public function suggestRoute()
+    public function suggestRoute(Request $request)
     {
         $user = Auth::user();
         $preferences = Favorite::with('artwork')->where('user_email','=',$user->email)->get();
@@ -71,6 +71,7 @@ class RecommendationController extends Controller
                                                             ['time','>=',300]
                                                         ])->get();
         $artworks = Artwork::with('heritage_site')->get();
+        $heritage_sites = HeritageSite::all();
 
         $suggestedArtworks = array();
         foreach ($artworks as $a) {
@@ -94,9 +95,22 @@ class RecommendationController extends Controller
                 }
             }
         }
+        $arts = null;
+        if($request->heritagesite != null)
+            $arts =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$request->heritagesite)->get();
+        // $arts2 =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$heritage_sites[1]->id)->get();
+        //$arts3 =  DB::table('artwork')->select('*')->where('heritage_site_id','=',$heritage_sites[2]->id)->get();
+        $uid = Auth::id();
         return view('suggested-artworks', [
+            "heritageSites" => $heritage_sites,
+            "arts" => $arts,
+            //"arts2" => $arts2,
+            //"arts3" => $arts3,
+            "uid" => $uid,
             "suggestedArtworks" => $suggestedArtworks
         ]);
     }
+
+
 
 }
