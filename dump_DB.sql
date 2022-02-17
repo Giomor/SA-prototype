@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 17, 2022 alle 16:09
+-- Creato il: Feb 17, 2022 alle 18:31
 -- Versione del server: 10.4.14-MariaDB
 -- Versione PHP: 7.4.19
 
@@ -217,22 +217,6 @@ INSERT INTO `heritage_site` (`id`, `name`, `description`, `crowd_limit`, `maximu
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `history`
---
-
-CREATE TABLE `history` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
-  `user_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `heritage_site_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `iot`
 --
 
@@ -254,21 +238,6 @@ INSERT INTO `iot` (`id`, `name`, `type`, `area`, `heritage_site_id`, `created_at
 (1, 'wifi', 'wifi', '1', 1, '2022-02-15 18:30:57', '2022-02-15 18:30:57'),
 (3, 'Proximity Sensor 1', 'Proximity sensor', '1', 2, NULL, NULL),
 (4, 'proximity sensor', 'sensor', '2', 1, '2022-02-17 12:57:12', '2022-02-17 12:57:18');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `media`
---
-
-CREATE TABLE `media` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `artwork_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -474,21 +443,9 @@ ALTER TABLE `heritage_site`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `history`
---
-ALTER TABLE `history`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indici per le tabelle `iot`
 --
 ALTER TABLE `iot`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indici per le tabelle `media`
---
-ALTER TABLE `media`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -578,22 +535,10 @@ ALTER TABLE `heritage_site`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT per la tabella `history`
---
-ALTER TABLE `history`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT per la tabella `iot`
 --
 ALTER TABLE `iot`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT per la tabella `media`
---
-ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `migrations`
