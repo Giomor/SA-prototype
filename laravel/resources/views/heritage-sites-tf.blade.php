@@ -1,8 +1,8 @@
 @extends('layouttemplate')
 @section('content')
     <div class="card-header">
-        <h2>Heritage Site Name</h2>
-        <p>Tickets available</p>
+        <h2>Proximity testing tool</h2>
+        
     </div>
     <div class="card-body">
             @for($i=0;$i<count($heritage_sites);$i++)

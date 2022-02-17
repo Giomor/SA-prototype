@@ -113,25 +113,35 @@ function clientWSListener(clientid,token){
         var params = '_token='+token+'&mapofid='+p;
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        http.onreadystatechange = function(resp) {
-
-            var body = http.response;
-            document.getElementById("mqttUserOut").innerHTML="";
-            document.getElementById("mqttUserOut").append(body+"<br>");
+        http.onreadystatechange = function() {
+            var body = JSON.parse(http.response).rm;
+            console.log(body);
+            if(body){document.getElementById("mqttUserOut").innerHTML="";
+            
+            body.forEach(element => {
+                document.getElementById("mqttUserOut").innerHTML+=
+                    "<div class='container-fluid'>"+
+                    "Name "+element.name+" +Description "+element.description+
+                    "</div>"
+                    "<br>";
+            });
+        }
         }
         http.send(params);
         console.log(usermap);
         console.log(endcheck);
+
         var paramsEC = '_token='+token+'&pec='+JSON.stringify({"check":Object.fromEntries(endcheck)});
         var url = 'http://127.0.0.1:8000/iot/endcheck';
-        http.open('POST', url, true);
-        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        http.onreadystatechange = function(resp) {
-
-            var body = http.response;
-            document.getElementById("mqttUserOut").innerHTML="";
-            document.getElementById("mqttUserOut").append(body+"<br>");
+        var http2 = new XMLHttpRequest();
+        http2.open('POST', url, true);
+        http2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http2.send(paramsEC);
+        document.getElementById("wtime").innerHTML="";
+        for (const [key, value] of endcheck.entries()) {
+            
+            
+            document.getElementById("wtime").innerHTML+="id "+key+" wtime "+value+"</br>";
         }
-        http.send(paramsEC);
     });   
 }

@@ -30,12 +30,13 @@ class ArtworkDescriptionServing extends Controller
             
             $retmap=array();
             foreach ($mapexp as $value) {
-                $retmap[] = DB::table('artwork')->select('*')->where('id','=',$value)->get();
+                array_push($retmap,DB::table('artwork')->select('*')->where('id','=',$value)->first());
             }
-            return  response($retmap, 200)
-            ->header('Content-Type', 'text/json');
+            
+            return  response(["rm"=>$retmap], 200)->header('Content-Type', 'application/javascript');;
         }
     }
+    
     public function TFlister(){
         $heritageSites =  DB::table('heritage_site')
         ->select('*')
