@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analytics;
 use App\Models\Artwork;
 use App\Models\AssociationArtworkTag;
 use App\Models\HeritageSite;
@@ -109,6 +110,9 @@ class ArtworkController extends Controller
     public function deleteArtwork(Request $request)
     {
         DB::table('artwork')->where('id', '=', $request->id)->delete();
+        DB::table('analytics')->where('artwork_id', '=', $request->id)->delete();
+        DB::table('favorite')->where('artwork_id', '=', $request->id)->delete();
+        DB::table('association_artwork_tag')->where('artwork_id', '=', $request->id)->delete();
         return Redirect::back()->with('artworkdeleted','Artwork Deleted');
     }
     public function crowdCheck($id)

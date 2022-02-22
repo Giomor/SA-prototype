@@ -78,6 +78,7 @@ class IoTController extends Controller
     public function deleteIot(Request $request)
     {
         DB::table('iot')->where('id', '=', $request->id)->delete();
+        DB::table('analytics')->where('iot_id', '=', $request->id)->delete();
         return Redirect::back()->with('iotdeleted','Component Deleted');
     }
 }
